@@ -43,7 +43,7 @@ class CustomerController extends Controller
             'phone' => $request->phone,
         ]);
 
-        return redirect()->route('Customers.index')->with('success', 'Customer added successfully');
+        return redirect()->route('customers.index')->with('success', 'Customer added successfully');
     }
 
 
