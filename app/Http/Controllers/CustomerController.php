@@ -35,7 +35,17 @@ class CustomerController extends Controller
             'email' => 'required|email|unique:customers,email',
             'phone' => 'required|string|max:20',
         ]);
+
+        Customer::create([
+            'user_id' => Auth::id(),
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+
+        return redirect()->route('Customers.index')->with('success', 'Customer added successfully');
     }
+
 
     /**
      * Display the specified resource.
