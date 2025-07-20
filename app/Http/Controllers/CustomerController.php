@@ -22,7 +22,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customer.create');
     }
 
     /**
@@ -35,6 +35,7 @@ class CustomerController extends Controller
             'email' => 'required|email|unique:customers,email',
             'phone' => 'required|string|max:20',
         ]);
+
 
         Customer::create([
             'user_id' => Auth::id(),
