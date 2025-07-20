@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use Auth;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -12,7 +13,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::where('user_id', Auth::id())->get();
+        return view('customer.index', compact('customers'));
     }
 
     /**
@@ -28,7 +30,11 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:customers,email',
+            'phone' => 'required|string|max:20',
+        ]);
     }
 
     /**
