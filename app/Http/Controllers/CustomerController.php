@@ -53,7 +53,10 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        if ($customer->user_id !== Auth::id()) {
+            abort(403);
+        }
+        return view('customer.show', compact('customer'));
     }
 
     /**
@@ -61,7 +64,10 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        if ($customer->user_id !== Auth::id()){
+            abort(403);
+        }
+        return view('customer.edit', compact('customer'));
     }
 
     /**
@@ -69,7 +75,22 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        if ($customer->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => "required|email|unique:customers,email,{$customer->id}",
+            'phone' => 'required|string|max:20',
+        ]);
+
+        $customer->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully');
     }
 
     /**
@@ -77,6 +98,10 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        if ($customer->user_id ==! Auth::id()) {
+            abort(403);
+        }
+        $customer->delete();
+        return redirect()->route('customers.index')->with('success', 'Customer deleted successfully');
     }
 }

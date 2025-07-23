@@ -1,27 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="max-w-3xl mx-auto p-6 bg-white rounded shadow">
     <h1 class="text-xl font-bold mb-4">Edit Customer</h1>
 
-    <form action="{{ route('customers.update', $customer) }}" method="POST" class="bg-white p-6 rounded shadow">
+    <form method="POST" action="{{ route('customers.update', $customer) }}">
         @csrf
         @method('PUT')
 
         <div class="mb-4">
-            <label>Name</label>
-            <input type="text" name="name" class="w-full p-2 border rounded" value="{{ old('name', $customer->name) }}">
+            <label for="name" class="block font-semibold mb-1">Name</label>
+            <input id="name" name="name" type="text" value="{{ old('name', $customer->name) }}" class="w-full border rounded p-2" required>
         </div>
 
         <div class="mb-4">
-            <label>Email</label>
-            <input type="email" name="email" class="w-full p-2 border rounded" value="{{ old('email', $customer->email) }}">
+            <label for="email" class="block font-semibold mb-1">Email</label>
+            <input id="email" name="email" type="email" value="{{ old('email', $customer->email) }}" class="w-full border rounded p-2" required>
         </div>
 
         <div class="mb-4">
-            <label>Phone</label>
-            <input type="text" name="phone" class="w-full p-2 border rounded" value="{{ old('phone', $customer->phone) }}">
+            <label for="phone" class="block font-semibold mb-1">Phone</label>
+            <input id="phone" name="phone" type="text" value="{{ old('phone', $customer->phone) }}" class="w-full border rounded p-2" required>
         </div>
 
-        <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Update</button>
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Update Customer</button>
     </form>
+</div>
 @endsection
