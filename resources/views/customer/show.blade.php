@@ -14,11 +14,11 @@
 
     <form action="{{ route('customers.notes.store', $customer) }}" method="POST" class="mb-4">
         @csrf
-        <textarea name="note" class="w-full border rounded p-2 mb-2" placeholder="Add a new note..." required></textarea>
+        <textarea name="content" class="w-full border rounded p-2 mb-2" placeholder="Add a new note..." required></textarea>
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add Note</button>
     </form>
 
-    @if($customer->notes->count())
+    @if($customer->notes && $customer->notes->count())
         <ul>
             @foreach($customer->notes as $note)
                 <li class="mb-2 border-b pb-2">

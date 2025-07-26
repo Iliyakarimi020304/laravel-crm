@@ -52,12 +52,17 @@ class CustomerController extends Controller
      * Display the specified resource.
      */
     public function show(Customer $customer)
-    {
-        if ($customer->user_id !== Auth::id()) {
-            abort(403);
-        }
-        return view('customer.show', compact('customer'));
+{
+    if ($customer->user_id !== Auth::id()) {
+        abort(403);
     }
+
+    $customer->load('notes');
+
+    return view('customer.show', compact('customer'));
+}
+
+
 
     /**
      * Show the form for editing the specified resource.

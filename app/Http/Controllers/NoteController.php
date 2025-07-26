@@ -28,17 +28,18 @@ class NoteController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request, Customer $customer)
-    {
-        $request->validate([
-            'note' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'content' => 'required|string',
+    ]);
 
-        $customer->notes()->create([
-            'note' => $request->note,
-        ]);
+    $customer->notes()->create([
+        'content' => $request->content,
+    ]);
 
-        return redirect()->route('customers.show', $customer)->with('success', 'Note added successfully');
-    }
+    return redirect()->route('customers.show', $customer)->with('success', 'Note added successfully');
+}
+
 
     /**
      * Display the specified resource.
