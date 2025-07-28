@@ -23,6 +23,18 @@
             <input id="phone" name="phone" type="text" value="{{ old('phone', $customer->phone) }}" class="w-full border rounded p-2" required>
         </div>
 
+        <div class="mb-4">
+            <label for="tags" class="block font-bold">Tags</label>
+            <select name="tags[]" multiple class="w-full border rounded p-2">
+                @foreach($tags as $tag)
+                    <option value="{{ $tag->id }}"
+                        @if(isset($customer) && $customer->tags->contains($tag->id)) selected @endif>
+                        {{ $tag->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Update Customer</button>
     </form>
 </div>

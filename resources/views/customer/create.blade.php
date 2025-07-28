@@ -20,6 +20,12 @@
             <label>Phone</label>
             <input type="text" name="phone" class="w-full p-2 border rounded" value="{{ old('phone') }}">
         </div>
+        @foreach($tags as $tag)
+    <label>
+        <input type="checkbox" name="tags[]" value="{{ $tag->id }}">
+        {{ $tag->name }}
+    </label><br>
+    @endforeach
 
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Create</button>
     </form>

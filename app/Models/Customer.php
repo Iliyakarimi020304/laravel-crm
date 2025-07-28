@@ -26,4 +26,9 @@ class Customer extends Model
         return $this->hasMany(Note::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
 }

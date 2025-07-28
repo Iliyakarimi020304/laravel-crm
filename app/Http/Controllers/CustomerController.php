@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Tag;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customer.create');
+        $tags = Tag::all();
+        return view('customer.create', compact('tags'));
     }
 
     /**
@@ -34,15 +36,19 @@ class CustomerController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:customers,email',
             'phone' => 'required|string|max:20',
+            'tags' => 'array',
+            'tags.*' => 'exists:tags,id',
         ]);
 
 
-        Customer::create([
+        $Customer = Customer::create([
             'user_id' => Auth::id(),
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
         ]);
+
+        $Customer->tags()->sync($request->tags);
 
         return redirect()->route('customers.index')->with('success', 'Customer added successfully');
     }
@@ -72,7 +78,8 @@ class CustomerController extends Controller
         if ($customer->user_id !== Auth::id()){
             abort(403);
         }
-        return view('customer.edit', compact('customer'));
+        $tags = Tag::all();
+        return view('customer.edit', compact('customer', 'tags'));
     }
 
     /**
@@ -88,6 +95,8 @@ class CustomerController extends Controller
             'name' => 'required|string|max:255',
             'email' => "required|email|unique:customers,email,{$customer->id}",
             'phone' => 'required|string|max:20',
+            'tags' => 'array',
+            'tags.*' => 'exists:tags,id',
         ]);
 
         $customer->update([
@@ -95,6 +104,9 @@ class CustomerController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
         ]);
+
+        $customer->tags()->sync($request->tags);
+
         return redirect()->route('customers.index')->with('success', 'Customer updated successfully');
     }
 
@@ -103,7 +115,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        if ($customer->user_id ==! Auth::id()) {
+        if ($customer->user_id !== Auth::id()) {
             abort(403);
         }
         $customer->delete();

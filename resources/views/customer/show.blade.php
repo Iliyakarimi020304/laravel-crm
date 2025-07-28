@@ -19,20 +19,22 @@
     </form>
 
     @if($customer->notes && $customer->notes->count())
-        <ul>
-            @foreach($customer->notes as $note)
-                <li class="mb-2 border-b pb-2">
-                    {{ $note->note }}
-                    <form action="{{ route('notes.destroy', $note) }}" method="POST" class="inline-block ml-2">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-500 text-sm">Delete</button>
-                    </form>
-                </li>
-            @endforeach
-        </ul>
-    @else
-        <p>No notes yet.</p>
-    @endif
-</div>
-@endsection
+    <ul>
+        @foreach($customer->notes as $note)
+            <li class="mb-2 border-b pb-2">
+                {{ $note->content }}
+                <form action="{{ route('notes.destroy', $note) }}" method="POST" class="inline-block ml-2">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-red-500 text-sm">Delete</button>
+                </form>
+            </li>
+        @endforeach
+    </ul>
+@else
+    <p>No notes yet.</p>
+@endif
+
+        </div>
+        @endsection
+
