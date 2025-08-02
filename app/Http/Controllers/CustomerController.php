@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\Tag;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -63,7 +63,7 @@ class CustomerController extends Controller
         abort(403);
     }
 
-    $customer->load('notes');
+    $customer->load('notes', 'tags');
 
     return view('customer.show', compact('customer'));
 }

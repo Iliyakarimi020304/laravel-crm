@@ -34,7 +34,19 @@
 @else
     <p>No notes yet.</p>
 @endif
+<h3 class="text-xl font-semibold mt-6 mb-2">Tags</h3>
 
+@if($customer->tags->isNotEmpty())
+    <div class="flex flex-wrap gap-2">
+        @foreach($customer->tags as $tag)
+        <a href="{{ route('tags.customers', $tag) }}" class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm hover:bg-green-200 transition">
+            {{ $tag->name }}
+        </a>
+        @endforeach
+    </div>
+@else
+    <p class="text-gray-600">No tags assigned.</p>
+@endif
         </div>
         @endsection
 

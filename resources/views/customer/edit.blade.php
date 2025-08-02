@@ -25,13 +25,13 @@
 
         <div class="mb-4">
             <label for="tags" class="block font-bold">Tags</label>
-            <select name="tags[]" multiple class="w-full border rounded p-2">
                 @foreach($tags as $tag)
-                    <option value="{{ $tag->id }}"
-                        @if(isset($customer) && $customer->tags->contains($tag->id)) selected @endif>
-                        {{ $tag->name }}
-                    </option>
-                @endforeach
+                <label class="block">
+                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}"
+                        {{ in_array($tag->id, $customer->tags->pluck('id')->toArray()) ? 'checked' : '' }}>
+                    {{ $tag->name }}
+                </label>
+            @endforeach
             </select>
         </div>
 
