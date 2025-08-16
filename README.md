@@ -21,7 +21,7 @@ A simple Customer Relationship Management (CRM) system built with Laravel.
 
 ```bash
 git clone https://github.com/Iliyakarimi020304/laravel-crm.git
-cd your-repo
+cd laravel-crm
 composer install
 cp .env.example .env
 php artisan key:generate
